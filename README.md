@@ -34,9 +34,15 @@ Database: Postgres
 
 ### Why not Rails?
 
-I have been working with Next.js prodominantly over the last few months, I thought I would get more code down in pure Typescript rather than rewire my brain back to Rails thinking. Plus I wanted to demonstrate some React hooks, and integrating React with Rails was not something I was familiar with.
+I have been working with Next.js predominantly over the last few months, I thought I would get more code down in pure Typescript rather than rewire my brain back to Rails thinking. Plus I wanted to demonstrate some React hooks, and integrating React with Rails was not something I was familiar with.
 
 Another benefit to Next,js is simple integration with Vercel for infrastructure tools, deployment, databases etc.
+
+### To run locally
+
+You will need the Vercel CLI and an account set up. After cloning this repo, use `vercel link` to asign to a project, then in the vercel web UI generate a Postgres database and link to this project. You can then run `vercel env pull .env.local` to populate environment variables to connect to your database.
+
+Remeber to run `yarn install` and then you can start the local server on `localhost:3000` with `yarn dev`
 
 ### Applying promotional balances
 
@@ -44,5 +50,7 @@ In your environment varibales include `PROMOTION_END_DATE="2023-11-30"` and `PRO
 
 ### Caveats and Todo
 
-- Proper user password encryption / auth sessions not implemented
-- Input validations
+- Proper user password encryption
+- auth session tokens not implemented
+- Client side input validations on forms
+- Testing (I wanted to spend the time getting working features) as this is described as a prototype

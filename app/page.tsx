@@ -1,8 +1,11 @@
 "use client";
+
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import Image from "next/image";
-import { useEffect, useState } from "react";
-import { createUser } from "@/lib/user";
+import { useState } from "react";
+
+import { createUser, loadUser, logInUser } from "@/lib/user";
 
 export const runtime = "edge";
 export const preferredRegion = "home";
@@ -11,6 +14,8 @@ export const dynamic = "force-dynamic";
 export default function Home() {
   const [displaySignUp, setDisplaySignUp] = useState<Boolean>(false);
   const [displayLogIn, setDisplayLogIn] = useState<Boolean>(false);
+
+  const router = useRouter();
 
   function showLogIn() {
     setDisplayLogIn(true);
@@ -30,14 +35,35 @@ export default function Home() {
     const surname = data.get("input_surname")?.toString();
     const email = data.get("input_email")?.toString();
     const password = data.get("input_password")?.toString();
-    const newId = await createUser({
-      firstName: firstName as string,
-      surname: surname as string,
-      email: email as string,
-      password: password as string,
-    });
 
-    console.log("NEW ID", newId);
+    try {
+      const newId = await createUser({
+        firstName: firstName as string,
+        surname: surname as string,
+        email: email as string,
+        password: password as string,
+      });
+
+      router.push("/account/" + newId);
+    } catch (e) {
+      console.log("Create User error", e);
+      alert("Unable to create account");
+    }
+  }
+
+  async function logIn(data: FormData) {
+    const email = data.get("input_email")?.toString();
+    const password = data.get("input_password")?.toString();
+    if (!email || !password) {
+      return;
+    }
+
+    try {
+      const userId = await logInUser({ email, password });
+      router.push("/account/" + userId);
+    } catch (e) {
+      alert("Unable to log in");
+    }
   }
 
   return (
@@ -78,9 +104,10 @@ export default function Home() {
             <a onClick={goBack}>Back</a>
           </div>
         )}
+
         {displayLogIn && (
           <div className="flex flex-col">
-            <form className="flex flex-col">
+            <form action={logIn} className="flex flex-col">
               <input name="input_email" type="text" placeholder="Enter email" />
               <input
                 name="input_password"

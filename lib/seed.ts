@@ -27,6 +27,7 @@ export async function seed() {
       FOREIGN KEY (user_id) REFERENCES users (id)
     );
   `;
+
   console.log(`Created "transactions" table`);
 
   const users = await Promise.all([
@@ -46,6 +47,7 @@ export async function seed() {
           ON CONFLICT (email) DO NOTHING;
       `,
   ]);
+
   console.log(`Seeded ${users.length} users`);
 
   return {
