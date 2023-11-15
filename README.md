@@ -32,11 +32,17 @@ Please provide either an online git repository (e.g. GitHub) or a compressed fil
 Framework: Next.JS on Vercel
 Database: Postgres
 
+### Why not Rails?
+
+I have been working with Next.js prodominantly over the last few months, I thought I would get more code down in pure Typescript rather than rewire my brain back to Rails thinking. Plus I wanted to demonstrate some React hooks, and integrating React with Rails was not something I was familiar with.
+
+Another benefit to Next,js is simple integration with Vercel for infrastructure tools, deployment, databases etc.
+
 ### Applying promotional balances
 
-- In your environment varibales include `PROMOTION_END_DATE="2023-11-30"` and `PROMOTION_VALUE=100`, adjust the end date to suit usecase
+In your environment varibales include `PROMOTION_END_DATE="2023-11-30"` and `PROMOTION_VALUE=100`, adjust the end date to suit usecase
 
 ### Caveats and Todo
 
 - Proper user password encryption / auth sessions not implemented
--
+- Input validations
