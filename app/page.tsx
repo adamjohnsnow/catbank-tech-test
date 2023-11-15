@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { useState } from "react";
 
-import { createUser, loadUser, logInUser } from "@/lib/user";
+import { createUser, logInUser } from "@/lib/user";
 
 export const runtime = "edge";
 export const preferredRegion = "home";

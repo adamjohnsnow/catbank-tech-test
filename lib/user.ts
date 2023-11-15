@@ -1,6 +1,7 @@
 "use server";
 
 import { QueryResultRow, sql } from "@vercel/postgres";
+import { logTransaction } from "./transaction";
 
 export interface UserProps {
   firstName: string;
@@ -26,12 +27,19 @@ export async function createUser(props: UserProps): Promise<string> {
 
   try {
     const response = await sql`
-  INSERT INTO users (first_name, surname, email, password, balance)
-  VALUES (${props.firstName}, ${props.surname}, ${props.email}, ${props.password}, ${balance})
-  ON CONFLICT (email) DO NOTHING
-  RETURNING id;
-`;
-    return response.rows[0].id;
+      INSERT INTO users (first_name, surname, email, password, balance)
+      VALUES (${props.firstName}, ${props.surname}, ${props.email}, ${props.password}, ${balance})
+      ON CONFLICT (email) DO NOTHING
+      RETURNING id;
+    `;
+
+    const id: string = response.rows[0].id;
+    if (balance > 0) {
+      const narrative = "Promotional signup bonus";
+      const amount = parseInt(promotionalBalance as string);
+      logTransaction({ id, narrative, amount });
+    }
+    return id;
   } catch (e) {
     return Promise.reject(e);
   }
@@ -55,7 +63,7 @@ export async function logInUser({
   return userAccount.id;
 }
 
-export async function loadUser(id: string) {
+export async function fetchUser(id: string) {
   const response = await sql`SELECT * FROM users WHERE id = ${id};`;
   console.log(response.rows[0]);
   if (response.rows.length === 0) {

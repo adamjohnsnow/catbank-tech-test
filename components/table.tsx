@@ -1,7 +1,7 @@
 import { sql } from "@vercel/postgres";
 import { seed } from "@/lib/seed";
 
-export default async function seedTables() {
+export async function seedTables() {
   let data;
   try {
     data = await sql`SELECT * FROM users`;
