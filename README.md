@@ -1,57 +1,42 @@
----
-name: Vercel Postgres Next.js Starter
-slug: postgres-starter
-description: Simple Next.js template that uses Vercel Postgres as the database.
-framework: Next.js
-useCase: Starter
-css: Tailwind
-database: Vercel Postgres
-deployUrl: https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fvercel%2Fexamples%2Ftree%2Fmain%2Fstorage%2Fpostgres-starter&project-name=postgres-starter&repository-name=postgres-starter&demo-title=Vercel%20Postgres%20Next.js%20Starter&demo-description=Simple%20Next.js%20template%20that%20uses%20Vercel%20Postgres%20as%20the%20database.&demo-url=https%3A%2F%2Fpostgres-starter.vercel.app%2F&demo-image=https%3A%2F%2Fpostgres-starter.vercel.app%2Fopengraph-image.png&stores=%5B%7B"type"%3A"postgres"%7D%5D
-demoUrl: https://postgres-starter.vercel.app/
-relatedTemplates:
-  - postgres-prisma
-  - postgres-kysely
-  - postgres-sveltekit
----
+# Catbank Tech Test
 
-# Vercel Postgres Next.js Starter
+### The task:
 
-Simple Next.js template that uses [Vercel Postgres](https://vercel.com/postgres) as the database.
+#### Background
 
-## Demo
+Silvercat have decided to open an online bank, Catbank, using our new currency, Silveuros. The new bank will run a promotion giving all new customers 100 free Silveuros when they sign up.
 
-https://postgres-starter.vercel.app/
+#### Requirements
 
-## How to Use
+We would like you to build a prototype web application that allows users to:
 
-You can choose from one of the following two methods to use this repository:
+- Create an account / log in
+- View their current balance and transactions
+- Send Silveuros to other users
 
-### One-Click Deploy
+#### The Solution
 
-Deploy the example using [Vercel](https://vercel.com?utm_source=github&utm_medium=readme&utm_campaign=vercel-examples):
+- You may use any languages, frameworks or technologies you like
+- You should include instructions on how to run/deploy your solution
+- Please provide a list of any assumptions you make
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fvercel%2Fexamples%2Ftree%2Fmain%2Fstorage%2Fpostgres-starter&project-name=postgres-starter&repository-name=postgres-starter&demo-title=Vercel%20Postgres%20Next.js%20Starter&demo-description=Simple%20Next.js%20template%20that%20uses%20Vercel%20Postgres%20as%20the%20database.&demo-url=https%3A%2F%2Fpostgres-starter.vercel.app%2F&demo-image=https%3A%2F%2Fpostgres-starter.vercel.app%2Fopengraph-image.png&stores=%5B%7B"type"%3A"postgres"%7D%5D)
+#### Expectations
 
-### Clone and Deploy
+- We don't want you to spend more than a few hours on this test!
+- Don't worry if you don't end up with a full working solution
 
-Execute [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app) with [pnpm](https://pnpm.io/installation) to bootstrap the example:
+Please provide either an online git repository (e.g. GitHub) or a compressed file containing your solution.
 
-```bash
-pnpm create next-app --example https://github.com/vercel/examples/tree/main/storage/postgres-starter
-```
+### Approach
 
-Once that's done, copy the .env.example file in this directory to .env.local (which will be ignored by Git):
+Framework: Next.JS on Vercel
+Database: Postgres
 
-```bash
-cp .env.example .env.local
-```
+### Applying promotional balances
 
-Then open `.env.local` and set the environment variables to match the ones in your Vercel Storage Dashboard.
+- In your environment varibales include `PROMOTION_END_DATE="2023-11-30"` and `PROMOTION_VALUE=100`, adjust the end date to suit usecase
 
-Next, run Next.js in development mode:
+### Caveats and Todo
 
-```bash
-pnpm dev
-```
-
-Deploy it to the cloud with [Vercel](https://vercel.com/new?utm_source=github&utm_medium=readme&utm_campaign=vercel-examples) ([Documentation](https://nextjs.org/docs/deployment)).
+- Proper user password encryption / auth sessions not implemented
+-
