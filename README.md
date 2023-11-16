@@ -66,7 +66,7 @@ On your account page, enter the email of another user and a numeric value and pr
 - header/footer partials
 - caching/useQuery/refetch
 - Probably shouldn't call everything 'props' for the interfaces, maybe should be custom types?
-- User ORM instead of SQP strings
+- User ORM instead of SQL strings
 
 ### Assumptions
 
