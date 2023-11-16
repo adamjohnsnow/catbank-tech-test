@@ -67,3 +67,14 @@ On your account page, enter the email of another user and a numeric value and pr
 - caching/useQuery/refetch
 - Probably shouldn't call everything 'props' for the interfaces, maybe should be custom types?
 - User ORM instead of SQP strings
+
+### Assumptions
+
+- The promotion bonus has an end date and can be reused for other promotions with variable values
+- Email is ok for identifying a customer at the moment
+- Transactions should have a + and balancing - entry
+- No sign up journey
+- Real logging in / authentication not needed for protoypes
+- 'SilverEuros' have 100 'cents' or decimals to 2 places
+- Used $€ as SliverEuro symbol
+- Only very basic styleing added, no dynamic/mobile effort made
