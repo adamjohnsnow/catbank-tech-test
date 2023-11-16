@@ -50,10 +50,14 @@ However, if you just want see the app running, it is deployed as [a vercel app h
 
 In your environment varibales include `PROMOTION_END_DATE="2023-11-30"` and `PROMOTION_VALUE=100`, adjust the end date to suit usecase. NB - if you run `vercel env pull .env.local` again, this will overwrite your promotion variables.
 
+### Making a transfer
+
+On your account page, enter the email of another user and a numeric value and press enter. Other user emails can be found in `.lib/seeds.ts`
+
 ### Caveats and Todo's
 
 - Proper user password encryption (bcrypt etc)
-- auth session tokens
+- auth session tokens (you can currently just go to `./account/[id]`)
 - Transaction wrappers / eliminate race conditions / queueing transactions for integrity
 - Client side input validations on forms
 - Testing (I wanted to spend the time getting working features) - this is described as a prototype

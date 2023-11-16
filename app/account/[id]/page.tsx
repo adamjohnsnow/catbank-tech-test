@@ -12,6 +12,7 @@ import { formatSilverEuro } from "@/lib/utils";
 import { Suspense, useEffect, useState } from "react";
 
 export const revalidate = 0;
+export const dynamic = "force-dynamic";
 
 export default function Account({ params }: { params: { id: string } }) {
   const [userAccount, setUserAccount] = useState<UserProps>();
@@ -46,11 +47,19 @@ export default function Account({ params }: { params: { id: string } }) {
   async function makeTransaction(data: FormData) {
     const email = data.get("input-email") as string;
     const amount = parseFloat(data.get("input-amount") as string);
-    if (email?.length === 0 || amount <= 0) {
+    const available = userAccount?.balance;
+    if (
+      email?.length === 0 ||
+      amount <= 0 ||
+      !available ||
+      amount > available
+    ) {
+      alert("Please enter correct transfer details");
       return;
     }
     try {
       await createNewTransaction(email, params.id, amount);
+      window.location.reload();
     } catch (e) {
       alert("Transaction failed");
     }
