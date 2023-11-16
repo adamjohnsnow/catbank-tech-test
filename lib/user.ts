@@ -65,7 +65,7 @@ export async function logInUser({
 
 export async function fetchUser(id: string) {
   const response = await sql`SELECT * FROM users WHERE id = ${id};`;
-  console.log(response.rows[0]);
+
   if (response.rows.length === 0) {
     return Promise.reject();
   }
@@ -79,22 +79,32 @@ export async function fetchUser(id: string) {
   };
 }
 
-function validateUserProps(props: UserProps): boolean {
-  if (!props.firstName || props.firstName.length === 0) {
-    return false;
+export async function fetchUserId(email: string) {
+  const response = await sql`SELECT * FROM users WHERE email = ${email};`;
+
+  if (response.rows.length === 0) {
+    return Promise.reject();
   }
 
-  if (!props.surname || props.surname.length === 0) {
-    return false;
+  const userAccount = response.rows[0];
+  return userAccount.id;
+}
+
+export async function fetchAllUsers(): Promise<UserProps[]> {
+  const response = await sql`SELECT * FROM users`;
+
+  if (response.rows.length === 0) {
+    return Promise.reject();
   }
 
-  if (!props.email || props.email.length === 0) {
-    return false;
-  }
+  const users: UserProps[] = [];
 
-  if (!props.password || props.password.length === 0) {
-    return false;
-  }
+  response.rows.forEach((user) => users.push(user as UserProps));
+  return users;
+}
 
-  return true;
+export async function adjustUserBalance(id: string, amount: number) {
+  const currentBalance = (await fetchUser(id)).balance;
+  const newBalance = currentBalance + amount;
+  sql`UPDATE users SET balance = ${newBalance} WHERE id = ${id};`;
 }

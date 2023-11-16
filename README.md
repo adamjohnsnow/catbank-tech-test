@@ -29,7 +29,7 @@ Please provide either an online git repository (e.g. GitHub) or a compressed fil
 
 ### Approach
 
-Framework: Next.JS on Vercel
+Framework: Next.JS (Node/React + Typescript)
 Database: Postgres
 
 ### Why not Rails?
@@ -40,17 +40,26 @@ Another benefit to Next,js is simple integration with Vercel for infrastructure 
 
 ### To run locally
 
-You will need the Vercel CLI and an account set up. After cloning this repo, use `vercel link` to asign to a project, then in the vercel web UI generate a Postgres database and link to this project. You can then run `vercel env pull .env.local` to populate environment variables to connect to your database.
+You will need the Vercel CLI and an account set up. After cloning this repo, use `vercel link` to asign to a project, then in the Vercel web UI, you can provision a new Postgres database and link to this project. You can then run `vercel env pull .env.local` in your terminal to populate environment variables to connect to your database.
 
 Remeber to run `yarn install` and then you can start the local server on `localhost:3000` with `yarn dev`
 
+However, if you just want see the app running, it is deployed as [a vercel app here](https://catbank-tech-test.vercel.app)
+
 ### Applying promotional balances
 
-In your environment varibales include `PROMOTION_END_DATE="2023-11-30"` and `PROMOTION_VALUE=100`, adjust the end date to suit usecase
+In your environment varibales include `PROMOTION_END_DATE="2023-11-30"` and `PROMOTION_VALUE=100`, adjust the end date to suit usecase. NB - if you run `vercel env pull .env.local` again, this will overwrite your promotion variables.
 
-### Caveats and Todo
+### Caveats and Todo's
 
-- Proper user password encryption
-- auth session tokens not implemented
+- Proper user password encryption (bcrypt etc)
+- auth session tokens
+- Transaction wrappers / eliminate race conditions / queueing transactions for integrity
 - Client side input validations on forms
-- Testing (I wanted to spend the time getting working features) as this is described as a prototype
+- Testing (I wanted to spend the time getting working features) - this is described as a prototype
+- Split DB dev/test/prod
+- Better error handling / edge cases
+- header/footer partials
+- caching/useQuery/refetch
+- Probably shouldn't call everything 'props' for the interfaces, maybe should be custom types?
+- User ORM instead of SQP strings

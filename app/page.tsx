@@ -10,6 +10,7 @@ import { createUser, logInUser } from "@/lib/user";
 export const runtime = "edge";
 export const preferredRegion = "home";
 export const dynamic = "force-dynamic";
+export const revalidate = 0;
 
 export default function Home() {
   const [displaySignUp, setDisplaySignUp] = useState<Boolean>(false);

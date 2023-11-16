@@ -1,6 +1,6 @@
 import "./globals.css";
 import { Inter } from "next/font/google";
-import { seedTables } from "@/components/table";
+import { seedTables } from "@/lib/table";
 
 export const metadata = {
   title: "Catbank",

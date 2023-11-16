@@ -2,10 +2,16 @@
 "use client";
 
 import { Transactions } from "@/components/transactions";
-import { TransactionProps, fetchTransactions } from "@/lib/transaction";
+import {
+  TransactionProps,
+  createNewTransaction,
+  fetchTransactions,
+} from "@/lib/transaction";
 import { UserProps, fetchUser } from "@/lib/user";
 import { formatSilverEuro } from "@/lib/utils";
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
+
+export const revalidate = 0;
 
 export default function Account({ params }: { params: { id: string } }) {
   const [userAccount, setUserAccount] = useState<UserProps>();
@@ -30,11 +36,28 @@ export default function Account({ params }: { params: { id: string } }) {
 
   async function loadTransactions() {
     try {
-      const transactionsResponse = await fetchTransactions(params.id);
+      const transactionsResponse = await fetchTransactions(params.id, 10);
       setTransactions(transactionsResponse);
     } catch (e) {
       alert("Unable to return transactions");
     }
+  }
+
+  async function makeTransaction(data: FormData) {
+    const email = data.get("input-email") as string;
+    const amount = parseFloat(data.get("input-amount") as string);
+    if (email?.length === 0 || amount <= 0) {
+      return;
+    }
+    try {
+      await createNewTransaction(email, params.id, amount);
+    } catch (e) {
+      alert("Transaction failed");
+    }
+  }
+
+  function TransactionsLoading() {
+    return <div>Loading...</div>;
   }
 
   return (
@@ -43,13 +66,25 @@ export default function Account({ params }: { params: { id: string } }) {
       {userAccount && (
         <div>
           <h1>Welcome back, {userAccount.firstName}</h1>
-          <div className="flex flex-col items-center bg-white/30 m-6 p-12 shadow-xl ring-1 ring-gray-900/5 rounded-lg backdrop-blur-lg max-w-xl mx-auto w-full h-[26rem]">
-            <h2>
+          <div className="flex">
+            <div className="flex flex-col items-center bg-white/30 m-6 p-12 shadow-xl ring-1 ring-gray-900/5 rounded-lg backdrop-blur-lg max-w-xl w-full h-[26rem]">
               Account Balance:{" "}
               <strong>{formatSilverEuro(userAccount.balance || 0)}</strong>
-            </h2>
-            <h3>Recent transactions:</h3>
-            <Transactions transactions={transactions} />
+              Recent transactions:
+              <Suspense fallback={<TransactionsLoading />}>
+                <Transactions transactions={transactions} />
+              </Suspense>
+            </div>
+
+            <div className="flex flex-col items-center bg-white/30 m-6 p-12 shadow-xl ring-1 ring-gray-900/5 rounded-lg backdrop-blur-lg max-w-xl w-full h-[26rem]">
+              <strong>Make a transfer</strong>
+
+              <form action={makeTransaction}>
+                Recipient email <input name="input-email" type="text" />
+                Amount $€ <input name="input-amount" type="number" step=".01" />
+                <button>Make transfer</button>
+              </form>
+            </div>
           </div>
         </div>
       )}
