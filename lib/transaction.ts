@@ -16,7 +16,8 @@ export async function createNewTransaction(
 ): Promise<boolean> {
   try {
     const recipientId = await fetchUserId(recipientEmail);
-    if (recipientId === senderId) {
+
+    if (recipientId.toString() === senderId) {
       return Promise.reject("Cannot transfer to same account");
     }
     await logTransaction({
@@ -55,7 +56,6 @@ export async function fetchTransactions(
   try {
     const response =
       await sql`SELECT * FROM transactions WHERE user_id = ${userId} LIMIT ${limit}`;
-    console.log(response);
     return response.rows;
   } catch (e) {
     return Promise.reject(e);
